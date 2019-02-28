@@ -22,11 +22,11 @@ var gl;
 var school = [];        // All the fish
 var boxSize = 15;       // Fish container size
 
-// flocking alg stuff: 
 var bounce = true;
 
-var fishCount = 100;    // Number of fish
+var fishCount = 50;    // Number of fish
 
+// flocking alg stuff: 
 var sepDist = 50/boxSize;
 var sepForce = 0.2;
 var alignDist = 100/boxSize;
@@ -34,7 +34,6 @@ var alignForce = 0.1;
 var cohDist =  100/boxSize;
 var cohForce = 0.1;
 var speed = 0.5;
-
 
 
 var movement = false;       // Mouse click drag
@@ -182,14 +181,22 @@ function updateSliders(val, change){
         case 'speed':
             speed = val;
             break;
-        case 'bounce':
-            if (bounce) {
-                val = 'Wrap';
-                bounce = !bounce;
-            } else {
-                val = 'Bounce';
-                bounce = !bounce;
+        
+        case 'fishCount':
+            while (fishCount != val){
+                if (fishCount>val) { school.pop(); fishCount--; }
+                else { school.push(newFish()); fishCount++; }
             }
+            break;
+
+        case 'bounce':
+        if (bounce) {
+            val = 'Wrap';
+            bounce = !bounce;
+        } else {
+            val = 'Bounce';
+            bounce = !bounce;
+        }
     
         default:
             break;
