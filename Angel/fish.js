@@ -190,14 +190,19 @@ function updateSliders(val, change){
             break;
 
         case 'bounce':
-        if (bounce) {
-            val = 'Wrap';
-            bounce = !bounce;
-        } else {
-            val = 'Bounce';
-            bounce = !bounce;
-        }
-    
+            if (bounce) {
+                val = 'Wrap';
+                bounce = !bounce;
+            } else {
+                val = 'Bounce';
+                bounce = !bounce;
+            }
+            break;
+
+        case 'reset':
+            location.reload();
+            break;
+
         default:
             break;
     }
