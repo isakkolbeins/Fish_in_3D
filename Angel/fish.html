@@ -1,0 +1,115 @@
+<html>
+<link rel="stylesheet" href="fish.css">
+
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+
+uniform mat4 projection;
+uniform mat4 modelview;
+
+void main() 
+{
+    gl_Position = projection * modelview * vPosition;
+} 
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+precision mediump float;
+   
+uniform vec4 fColor;
+
+void
+main()
+{
+    gl_FragColor = fColor;
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="vertices.js"></script>
+<script type="text/javascript" src="fish.js"></script>
+<script type="text/javascript" src="util.js"></script>
+
+<body >
+    <canvas id="gl-canvas" width="800" height="800">
+    Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+
+        <div class="slidecontainer">
+        <div class="slider">
+            <div class="sliderTitle">
+                <p>Separation distance</p>
+                <p id='sepDist'>50</p>
+            </div>
+            <input type="range" min="0" max="200" step="1" value="50" class="slidebar"
+            oninput="updateSliders(this.value, 'sepDist')" onchange="updateSliders(this.value,'sepDist')">
+        </div>
+        <div class="slider">
+            <div class="sliderTitle">
+                <p>Seperation force</p>
+                <p id='sepForce'>0.2</p>
+            </div>
+            <input type="range" min="0.0" max="1.0" step="0.01" value="0.2" class="slidebar"
+            oninput="updateSliders(this.value, 'sepForce')" onchange="updateSliders(this.value,'sepForce')">
+        </div>
+        <div class="slider">
+            <div class="sliderTitle">
+                <p>Alignment distance</p>
+                <p id='alignDist'>100</p>
+            </div>
+            <input type="range" min="0" max="200" step="1" value="100" class="slidebar"
+            oninput="updateSliders(this.value, 'alignDist')" onchange="updateSliders(this.value,'alignDist')">
+        </div>
+        <div class="slider">
+            <div class="sliderTitle">
+                <p>Alignment force</p>
+                <p id='alignForce'>0.1</p>
+            </div>
+            <input type="range" min="0.0" max="1.0" step="0.01" value="0.1" class="slidebar"
+            oninput="updateSliders(this.value, 'alignForce')" onchange="updateSliders(this.value,'alignForce')">
+        </div>
+        <div class="slider">
+            <div class="sliderTitle">
+                <p>Cohesion distance</p>
+                <p id='cohDist'>100</p>
+            </div>
+            <input type="range" min="0" max="200" step="1" value="100" class="slidebar"
+            oninput="updateSliders(this.value, 'cohDist')" onchange="updateSliders(this.value,'cohDist')">
+        </div>
+        <div class="slider">
+            <div class="sliderTitle">
+                <p>Cohesion force</p>
+                <p id='cohForce'>0.1</p>
+            </div>
+            <input type="range" min="0.0" max="1.0" step="0.01" value="0.1" class="slidebar"
+            oninput="updateSliders(this.value, 'cohForce')" onchange="updateSliders(this.value,'cohForce')">
+        </div>
+        <div class="slider">
+            <div class="sliderTitle">
+                <p>Swim speed</p>
+                <p id='speed'>0.5</p>
+            </div>
+            <input type="range" min="0.0" max="1.0" step="0.1" value="0.5" class="slidebar"
+            oninput="updateSliders(this.value, 'speed')" onchange="updateSliders(this.value,'speed')">
+        </div>
+        <div class="togglecontainer">
+            <div class="sliderTitle">
+                    <p id='bounce'>Bounce</p>
+            </div>
+            <label class="switch">  
+                    <input type="checkbox" onchange="updateSliders( this.value, 'bounce')" value="Bounce" >
+                    <span class="toggle"></span>
+            </label>
+        </div>
+
+        </div>
+
+
+</body>
+</html>
