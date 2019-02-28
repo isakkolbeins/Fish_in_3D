@@ -119,7 +119,17 @@ window.onload = function init()
         e.preventDefault();         // Disable drag and drop
     } );
 
+    canvas.addEventListener("touchstart", function(e){
+        movement = true;
+        origX =  e.clientX || e.targetTouches[0].pageX;;
+        origY =  e.clientY || e.targetTouches[0].pageY;;
+        e.preventDefault();         // Disable drag and drop
+    } );
+
     canvas.addEventListener("mouseup", function(e){
+        movement = false;
+    } );
+    canvas.addEventListener("touchend", function(e){
         movement = false;
     } );
 
@@ -129,6 +139,16 @@ window.onload = function init()
             spinX += (e.offsetY - origY) % 360;
             origX = e.offsetX;
             origY = e.offsetY;
+        }
+    } );
+    canvas.addEventListener("touchmove", function(e){
+        if(movement) {
+            var currx =  e.clientX || e.targetTouches[0].pageX;
+            var curry =  e.clientY || e.targetTouches[0].pageY;
+    	    spinY += (currx - origX) % 360;
+            spinX += (curry - origY) % 360;
+            origX = currx;
+            origY = curry;
         }
     } );
     
@@ -236,21 +256,17 @@ function newFish(){
 function updateFish(fish, index){
     
     var next= nextPos(fish);
-    
     // Check next positions if inbound 
     var ok = true;  
     Object.keys(next).map(d => {
         if ( (-boxSize +fish.size*0.5) >= next[d] || next[d] >= (boxSize-fish.size*0.5) ){
-            if (bounce) { 
-                fish.dir.cart[d] *= -1;
-            } else {
-                fish.pos[d] *= -1;
-            }
-        ok = false;
+            if (bounce) { fish.dir.cart[d] *= -1 } 
+            else { fish.pos[d] *= -1;}
+            ok = false;
     }
     }); 
     
-    // if inbpund use flocking algorithm
+    // if inbound use flocking algorithm
     if (ok){
         var sepFish = [{dir: fish.dir.cart, dist:sepDist}];
         var cohFish = [{dir: fish.dir.cart, dist:cohDist}];

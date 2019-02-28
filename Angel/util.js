@@ -67,18 +67,12 @@ function calcDist(f1, f2) {
 // The average direction of directional 3d vectors
 function calcAvgXYZ(arr){
     var len = arr.length;
-    var totx = 0;
-    var toty = 0;
-    var totz = 0;
-    arr.forEach(curr => {
-        totx = totx + curr.dir.x;
-        toty = toty + curr.dir.y;
-        totz = totz + curr.dir.z;
-    });
-    return {x: totx/len, y: toty/len, z: totz/len};
+    var tot = {x:0, y:0, z:0};
+    arr.map(curr => { Object.keys(tot).map(d => { tot[d] += curr.dir[d] }) });
+    return {x: tot.x/len, y: tot.y/len, z: tot.z/len};
 }
 
-// Calculates the direction of obj based on seperation, cohesion and alignment and the equvelant force
+// Calculates the direction of obj based on seperation, cohesion and alignment and their force
 function calcDir(sep, coh, align, curr) {
     return {
         x : curr.x + (+sep.x*sepForce + coh.x*cohForce + align.x*alignForce)%1 ,
